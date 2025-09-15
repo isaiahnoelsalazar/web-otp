@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=7">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Web OTP</title>
+        <style>
+            * {
+                box-sizing: border-box;
+                font-family: 'Courier New', Courier, monospace;
+            }
+            .file-upload {
+                display: inline-block;
+                padding: 16px;
+                cursor: pointer;
+                background-color: black;
+                color: white;
+                border-radius: 8px;
+                margin-bottom: 16px;
+            }
+            .file-upload:hover {
+                background-color: #000000CC;
+            }
+            input[type="file"] {
+                display: none;
+            }
+            button {
+                background-color: black;
+                color: white;
+                padding: 16px;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            button:hover {
+                background-color: #000000CC;
+            }
+        </style>
+    </head>
+    <body>
+        <label for="file" class="file-upload">Choose QR Code</label>
+        <input accept=".png, .jpg, .jpeg, .webp" type="file" name="file" id="file" onchange="chooseQR(this)">
+        <button onclick="uploadQR()">Upload QR Code</button>
+        <button onclick="clearOTPs()">Clear OTPs</button>
+        <div id="otp-container"></div>
+    </body>
+    <script src="index.js"></script>
+</html>
