@@ -1,3 +1,7 @@
+let timer = setTimeout(function (){
+    window.location.reload();
+}, 30000);
+
 function chooseQR(input){
     const label = document.querySelector("label[for='file']");
     if (input.files && input.files.length > 0) {
@@ -8,6 +12,7 @@ function chooseQR(input){
 }
 
 function uploadQR(){
+    clearTimeout(timer);
     const formData = new FormData();
     formData.append('file', document.getElementById("file").files[0]);
     let requestPost = new XMLHttpRequest();
@@ -23,6 +28,10 @@ function uploadQR(){
 
 function clearOTPs(){
     localStorage.setItem("saved", "");
+    window.location.reload();
+}
+
+function refreshOTPs(){
     window.location.reload();
 }
 
@@ -67,7 +76,4 @@ window.onload = function (){
         }
     };
     requestPost.send(formData);
-    this.setTimeout(function (){
-        window.location.reload();
-    }, 15000);
 };
