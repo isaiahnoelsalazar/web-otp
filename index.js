@@ -42,6 +42,7 @@ window.onload = function (){
     const formData = new FormData();
     let storage = this.localStorage.getItem("saved");
     let structured_storage = storage.split("\n");
+    structured_storage.shift();
     let formDataBody = "";
     structured_storage.forEach(item => {
         if (item != ""){
@@ -70,9 +71,39 @@ window.onload = function (){
     requestPost.onreadystatechange = function (){
         if (requestPost.status == 200 && requestPost.readyState == 4){
             let response = requestPost.responseText;
-            let h1 = document.createElement('h1');
-            h1.innerHTML = response;
-            document.getElementById('otp-container').appendChild(h1);
+            for (let count = 0; count < response.split("<br>").length; count++){
+                if (response.split("<br>")[count] != ""){
+                    let h1 = document.createElement('h1');
+                    h1.innerHTML = response.split("<br>")[count];
+                    let a = document.createElement("a");
+                    a.style.display = "flex";
+                    a.style.alignItems = "center";
+                    a.style.justifyContent = "center";
+                    a.style.height = "36px";
+                    a.style.width = "36px";
+                    a.addEventListener("click", function (){
+                        structured_storage.splice(count, 1);
+                        let new_structured_storage = "";
+                        structured_storage.forEach(newItem => {
+                            new_structured_storage += "\n" + newItem;
+                        });
+                        localStorage.setItem("saved", new_structured_storage);
+                        window.location.reload();
+                    });
+                    let img = document.createElement("img");
+                    img.style.height = "24px";
+                    img.style.width = "24px";
+                    img.src = "delete_icon.png";
+                    let div = document.createElement("div");
+                    div.style.display = "flex";
+                    div.style.alignItems = "center";
+                    div.style.gap = "8px";
+                    div.appendChild(h1);
+                    a.appendChild(img);
+                    div.appendChild(a);
+                    document.getElementById('otp-container').appendChild(div);
+                }
+            }
         }
     };
     requestPost.send(formData);
