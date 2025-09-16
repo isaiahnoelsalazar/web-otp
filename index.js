@@ -27,6 +27,9 @@ function clearOTPs(){
 }
 
 window.onload = function (){
+    if (this.localStorage.getItem("saved") == null){
+        this.localStorage.setItem("saved", "");
+    }
     const formData = new FormData();
     let storage = this.localStorage.getItem("saved");
     let structured_storage = storage.split("\n");
