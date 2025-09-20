@@ -47,10 +47,13 @@
     </head>
     <body>
         <label for="file" class="file-upload">Choose QR Code</label>
-        <input accept=".png, .jpg, .jpeg, .webp" type="file" name="file" id="file" onchange="chooseQR(this)">
+        <input accept=".png, .jpg, .jpeg, .webp, .bmp" type="file" name="file" id="file" onchange="chooseQR(this)">
         <button onclick="uploadQR()">Upload QR Code</button>
         <button onclick="clearOTPs()">Clear OTPs</button>
         <button onclick="refreshOTPs()">Refresh OTPs</button>
+        <button onclick="backupOTPs()">Backup</button>
+        <label for="restore" class="file-upload">Restore</label>
+        <input accept=".webotpsave" type="file" name="restore" id="restore" onchange="restoreOTPs(this)">
         <div id="otp-container"></div>
     </body>
     <script src="index.js"></script>

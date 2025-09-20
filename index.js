@@ -35,6 +35,28 @@ function refreshOTPs(){
     window.location.reload();
 }
 
+function backupOTPs(){
+    const date = new Date();
+    let year = date.getFullYear();
+    let month = (date.getMonth() + 1) > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
+    let day = date.getDate();
+    let ymd = `${year}${month}${day}`;
+    const blob = new Blob([localStorage.getItem("saved").substring(1)], {type: "text/plain"});
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = ymd + "-" + date.getTime() + "-WebOTP.webotpsave";
+    link.click();
+    URL.revokeObjectURL(link.href);
+}
+
+function restoreOTPs(){
+    let fr = new FileReader();
+    fr.onload = function (){
+        localStorage.setItem("saved", localStorage.getItem("saved") + "\n" + fr.result);
+    };
+    fr.readAsText(document.getElementById("restore").files[0]);
+}
+
 window.onload = function (){
     if (this.localStorage.getItem("saved") == null){
         this.localStorage.setItem("saved", "");
