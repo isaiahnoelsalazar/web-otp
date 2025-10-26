@@ -53,6 +53,7 @@ function restoreOTPs(){
     let fr = new FileReader();
     fr.onload = function (){
         localStorage.setItem("saved", localStorage.getItem("saved") + "\n" + fr.result);
+        window.location.reload();
     };
     fr.readAsText(document.getElementById("restore").files[0]);
 }
