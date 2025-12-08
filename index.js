@@ -149,8 +149,9 @@ window.onload = function (){
                     div.style.gap = "8px";
                     div.appendChild(h1);
                     a.appendChild(img);
-                    a.appendChild(img1);
+                    a1.appendChild(img1);
                     div.appendChild(a);
+                    div.appendChild(a1);
                     document.getElementById('otp-container').appendChild(div);
                 }
             }
