@@ -58,6 +58,13 @@ function restoreOTPs(){
     fr.readAsText(document.getElementById("restore").files[0]);
 }
 
+function cancelAddOTPDescription(){
+    document.getElementById("add-description-panel").style.display = "none";
+}
+
+function confirmAddOTPDescription(){
+}
+
 window.onload = function (){
     if (this.localStorage.getItem("saved") == null){
         this.localStorage.setItem("saved", "");
@@ -73,6 +80,7 @@ window.onload = function (){
             let account = "";
             let secret = "";
             let issuer = "";
+            let description = "";
             let query = item.split("?");
             id = query[0].split("totp")[1].toLowerCase().replaceAll("%20", " ");
             account = query[0].split(":")[query[0].split(":").length - 1].replaceAll("%20", " ");
@@ -84,8 +92,11 @@ window.onload = function (){
                 if (queryItem.split("=")[0] == "issuer"){
                     issuer = queryItem.split("=")[1];
                 }
+                if (queryItem.split("=")[0] == "description"){
+                    description = queryItem.split("=")[1];
+                }
             });
-            formDataBody += id.replace("/", "(slash)").replace(":", "(colon)") + "()" + account + "()" + secret + "()" + issuer + "(nl)";
+            formDataBody += id.replace("/", "(slash)").replace(":", "(colon)") + "()" + account + "()" + secret + "()" + issuer + "()" + description + "(nl)";
         }
     });
     formData.append("otps", formDataBody);
@@ -117,12 +128,28 @@ window.onload = function (){
                     img.style.height = "24px";
                     img.style.width = "24px";
                     img.src = "delete_icon.png";
+                    
+                    let a1 = document.createElement("a");
+                    a1.style.display = "flex";
+                    a1.style.alignItems = "center";
+                    a1.style.justifyContent = "center";
+                    a1.style.height = "36px";
+                    a1.style.width = "36px";
+                    a1.addEventListener("click", function (){
+                        document.getElementById("add-description-panel").style.display = "flex";
+                    });
+                    let img1 = document.createElement("img");
+                    img1.style.height = "24px";
+                    img1.style.width = "24px";
+                    img1.src = "edit_icon.png";
+
                     let div = document.createElement("div");
                     div.style.display = "flex";
                     div.style.alignItems = "center";
                     div.style.gap = "8px";
                     div.appendChild(h1);
                     a.appendChild(img);
+                    a.appendChild(img1);
                     div.appendChild(a);
                     document.getElementById('otp-container').appendChild(div);
                 }

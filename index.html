@@ -16,6 +16,17 @@
                 margin: 0;
                 padding: 0 8px;
             }
+            #add-description-panel {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background-color: #00000088;
+                display: none;
+                align-items: center;
+                justify-content: center;
+            }
             .file-upload {
                 display: inline-block;
                 padding: 16px;
@@ -58,6 +69,16 @@
         </style>
     </head>
     <body>
+        <div id="add-description-panel">
+            <div style="background-color: white; padding: 16px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px;">
+                <h2>Add Description</h2>
+                <input type="text" id="otp-description-input" placeholder="Description">
+                <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                    <button onclick="cancelAddOTPDescription()">Cancel</button>
+                    <button onclick="confirmAddOTPDescription()">Confirm</button>
+                </div>
+            </div>
+        </div>
         <label for="file" class="file-upload">Choose QR Code</label>
         <input accept=".png, .jpg, .jpeg, .webp, .bmp" type="file" name="file" id="file" onchange="chooseQR(this)">
         <button onclick="uploadQR()">Upload QR Code</button>
