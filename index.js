@@ -1,6 +1,7 @@
 let timer = setTimeout(function (){
     window.location.reload();
 }, 30000);
+let otp_descripton_index = -1;
 
 function chooseQR(input){
     const label = document.querySelector("label[for='file']");
@@ -19,7 +20,17 @@ function uploadQR(){
     requestPost.open("POST", "https://isaiahnoelsubaccount.pythonanywhere.com/web_otp_scan", true);
     requestPost.onreadystatechange = function (){
         if (requestPost.status == 200 && requestPost.readyState == 4){
-            localStorage.setItem("saved", localStorage.getItem("saved") + "\n" + requestPost.responseText);
+            localStorage.setItem("saved", localStorage.getItem("saved") + "\n" + requestPost.responseText + "&description=None");
+            let storage = this.localStorage.getItem("saved");
+            let structured_storage = storage.split("\n");
+            structured_storage.shift();
+            let new_storage = "";
+            structured_storage.forEach(item => {
+                if (item != ""){
+                    new_storage += "\n" + item;
+                }
+            });
+            localStorage.setItem("saved", new_storage);
             window.location.reload();
         }
     };
@@ -36,10 +47,20 @@ function refreshOTPs(){
 }
 
 function backupOTPs(){
+    let storage = this.localStorage.getItem("saved");
+    let structured_storage = storage.split("\n");
+    structured_storage.shift();
+    let new_storage = "";
+    structured_storage.forEach(item => {
+        if (item != ""){
+            new_storage += "\n" + item;
+        }
+    });
+    localStorage.setItem("saved", new_storage);
     const date = new Date();
     let year = date.getFullYear();
     let month = (date.getMonth() + 1) > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
-    let day = date.getDate();
+    let day = date.getDate() > 9 ? date.getDate() : "0" + date.getDate();
     let ymd = `${year}${month}${day}`;
     const blob = new Blob([localStorage.getItem("saved").substring(1)], {type: "text/plain"});
     const link = document.createElement("a");
@@ -53,6 +74,16 @@ function restoreOTPs(){
     let fr = new FileReader();
     fr.onload = function (){
         localStorage.setItem("saved", localStorage.getItem("saved") + "\n" + fr.result);
+        let storage = this.localStorage.getItem("saved");
+        let structured_storage = storage.split("\n");
+        structured_storage.shift();
+        let new_storage = "";
+        structured_storage.forEach(item => {
+            if (item != ""){
+                new_storage += "\n" + item;
+            }
+        });
+        localStorage.setItem("saved", new_storage);
         window.location.reload();
     };
     fr.readAsText(document.getElementById("restore").files[0]);
@@ -60,9 +91,23 @@ function restoreOTPs(){
 
 function cancelAddOTPDescription(){
     document.getElementById("add-description-panel").style.display = "none";
+    document.getElementById("otp-description-input").value = "";
 }
 
 function confirmAddOTPDescription(){
+    let storage = this.localStorage.getItem("saved");
+    let structured_storage = storage.split("\n");
+    structured_storage.shift();
+    structured_storage[otp_descripton_index] = structured_storage[otp_descripton_index].split("&description=")[0] + "&description=" + document.getElementById("otp-description-input").value;
+    let new_storage = "";
+    structured_storage.forEach(item => {
+        if (item != ""){
+            new_storage += "\n" + item;
+        }
+    });
+    localStorage.setItem("saved", new_storage);
+    document.getElementById("otp-description-input").value = "";
+    window.location.reload();
 }
 
 window.onload = function (){
@@ -122,6 +167,16 @@ window.onload = function (){
                             new_structured_storage += "\n" + newItem;
                         });
                         localStorage.setItem("saved", new_structured_storage);
+                        let storage1 = this.localStorage.getItem("saved");
+                        let structured_storage1 = storage1.split("\n");
+                        structured_storage1.shift();
+                        let new_storage1 = "";
+                        structured_storage1.forEach(item => {
+                            if (item != ""){
+                                new_storage1 += "\n" + item;
+                            }
+                        });
+                        localStorage.setItem("saved", new_storage1);
                         window.location.reload();
                     });
                     let img = document.createElement("img");
@@ -137,6 +192,7 @@ window.onload = function (){
                     a1.style.width = "36px";
                     a1.addEventListener("click", function (){
                         document.getElementById("add-description-panel").style.display = "flex";
+                        otp_descripton_index = count;
                     });
                     let img1 = document.createElement("img");
                     img1.style.height = "24px";

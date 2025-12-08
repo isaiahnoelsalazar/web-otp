@@ -11,4 +11,4 @@ Web OTP is a web-based OTP authenticator.
 - It will not save your data online
 
 ## Issues:
-- May not detect camera taken QR code images (will fix soon)
+- May not detect QR code images taken by camera (will fix soon)
