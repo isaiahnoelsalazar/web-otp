@@ -31,7 +31,7 @@ function uploadQR(){
                 }
             });
             localStorage.setItem("saved", new_storage);
-            window.location.reload();
+            window.location.reload(true);
         }
     };
     requestPost.send(formData);
