@@ -177,7 +177,7 @@ window.onload = function (){
                             }
                         });
                         localStorage.setItem("saved", new_storage1);
-                        window.location.reload();
+                        window.location.reload(true);
                     });
                     let img = document.createElement("img");
                     img.style.height = "24px";
